@@ -27,8 +27,8 @@ var eatFood = function(friend1,friend2){
 eatFood("Karry","Mage"); 
 
 /*我跟His Monter和His Father一起去吃beef*/
-eatFood.call(Tom,"His Monter","His Father"); 
-eatFood.apply(Tom,["His Monter","His Father"]);
+eatFood.call(Tom,"Monter","Father"); 
+eatFood.apply(Tom,["Monter","Father"]);
 ```
 
 eatFood是一个函数对象，`call`和`apply`是函数的一个内置的方法。在非严格模式下，直接调用eatFood()的时候，函数里的this是指向window的，所以打印出来的`food`是 `fish` ；而通过`call`或`apply`让函数对象的this指针指向`Tom`，因此打印出来的是`beef`。  
