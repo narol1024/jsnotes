@@ -14,14 +14,20 @@ MB，好像这概念很晦涩的样子。都是什么鬼啊？？
 * `apply`：调用一个对象的一个方法，以另一个对象替换当前的this，其中传参以数组或类数组对象传入。   
 
 
-感觉是不是又理解了一点了，没关系，再看看下面的例子，应该就差不多了。
+是不是感觉又理解了一点了，没关系，再看看下面的例子，应该就差不多了。
 
 ```javascript
-var color = "red";
-var myColor = {color:"blue"};
-var sayColor = function(){
-	console.log(this.color);
+var food = "fish";
+var Tom = {food:"beef"};
+var eatFood = function(friend1,friend2){
+	console.log('我跟'+friend1+"和"+friend2+"一起去吃"+this.food);
 };
-sayColor();/*red*/
-sayColor.call(myColor);/*blue*/
+/*我跟Karry和Mage一起去吃fish*/
+eatFood("Karry","Mage"); 
+/*我跟His Monter和His Father一起去吃beef*/
+eatFood.call(Tom,"His Monter","His Father"); 
+eatFood.apply(Tom,["His Monter","His Father"]);
 ```
+
+sayColor是一个函数对象，`call`和`apply`是函数的一个内置的方法。在非严格模式下，直接调用sayColor()的时候，函数里的this是指向window的，所以打印出来的`food`是 `fish` ；而通过`call`或`apply`让函数对象的this指针指向`Tom`，因此打印出来的是`beef`。  
+还有从例子中，我们也可以看出，call是接收参数需要逐个列举出来，apply则是接收数组形式的参数。
