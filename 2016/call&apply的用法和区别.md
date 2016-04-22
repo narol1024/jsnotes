@@ -26,7 +26,7 @@ var eatFood = function(friend1,friend2){
 /*我跟Karry和Mage一起去吃fish*/
 eatFood("Karry","Mage"); 
 
-/*我跟His Monter和His Father一起去吃beef*/
+/*我跟Monter和Father一起去吃beef*/
 eatFood.call(Tom,"Monter","Father"); 
 eatFood.apply(Tom,["Monter","Father"]);
 ```
