@@ -1,4 +1,4 @@
-# jsnote
+# jsnotes
 记录javascript各种难点冷门知识点  
 
 欢迎投稿或交流。  
