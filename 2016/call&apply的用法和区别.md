@@ -31,7 +31,7 @@ eatFood.call(Tom,"Monter","Father");
 eatFood.apply(Tom,["Monter","Father"]);
 ```
 
-eatFood是一个函数对象，`call`和`apply`是函数对象的一个内置的方法。在非严格模式下，直接调用eatFood()的时候，函数里的this是指向window的，所以打印出来的`food`是 `fish` ；而通过`call`或`apply`调用，此时eatFoodthis指针已经被Tom代替了，所以，因此打印出来的是`beef`。  
+eatFood是一个函数对象，`call`和`apply`是函数对象的一个内置的方法。在非严格模式下，直接调用eatFood()的时候，函数里的this是指向window的，所以打印出来的`food`是 `fish` ；而通过`call`或`apply`调用，此时eatFood的this指针已经被Tom代替了，所以，因此打印出来的是`beef`。  
 还有从例子中，我们也可以看出，call是接收参数需要逐个列举出来，apply则是接收数组形式的参数即可，比如普通数组或者arguments类数组都可以。
 ##作用
 其实使用`call`或`apply`最大的好处，就是可以扩充作用域，对象不需要与方法有任何的耦合关心。
