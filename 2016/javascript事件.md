@@ -46,7 +46,7 @@ DOM事件流是在“DOM2级事件”中规范出来的，它规定的事件流�
 
 IE9、Opera、Firefox、Chrome和Safari都支持DOM事件流。
 
-你点个赞。其实javascript的事件流的内容大概就是这些了。然而你会问，这么多理论，到底有个卵用啊？？？肯定有卵用啦，不然人家也不会出规范啦。这里我写了一个实例，帮助大家理解DOM事件流  
+你点个赞。其实javascript的事件流的内容大概就是这些了。然而你会问，这么多理论，到底有个卵用啊？？？当然是有用的，它可以让我们在恰当的时机阻止事件冒泡，以及帮助理解`jQuery`的事件委托（以后的文章会有专门介绍**jQuery事件委托**）。这里我写了一个实例，帮助大家理解DOM事件流  
 ```html
 <div id="div">
 	<button id="button">button</button>
@@ -56,15 +56,64 @@ IE9、Opera、Firefox、Chrome和Safari都支持DOM事件流。
 var $button = document.getElementById("button");
 var $div = document.getElementById("div");
 $div.addEventListener("click",function(event){
-    console.info("这是捕获阶段的div");
+    console.log("捕获阶段的div");
 },true);
 $button.addEventListener("click",function(event){
-	console.info("这是捕获阶段的button");
+	console.log("捕获阶段的button");
 },true);
 $button.addEventListener("click",function(event){
-	console.info("这是冒泡阶段的button");
+	console.log("冒泡阶段的button");
 },false);
 $div.addEventListener("click",function(event){
-    console.info("这是冒泡阶段的div");
+    console.log("冒泡阶段的div");
 },false);
+```  
+
+上面的例子，打印出来的是log顺序应该是：`捕获阶段的div` -> `捕获阶段的button` -> `冒泡阶段的button` -> `冒泡阶段的div`。   
+假设我只想让事件传播到捕获阶段的`捕获阶段的div`就停止了，这时候只要在事件处理程序里面加上`event.stopPropagation()`就ok了。
+```javascript
+$div.addEventListener("click",function(event){
+	console.log("这是捕获阶段的div");
+	event.stopPropagation();
+},true);
 ```
+
+###事件处理程序
+我们知道，事件就是用户或浏览器自行执行的某种动作，而响应某个事件的函数，就叫做**事件处理程序**（**事件侦听器**）。事件处理程序的名称以`on`开头，，click事件的事件处理程序就是onclick，load事件的事件处理程序就是onload了。而为事件指定处理程序的方式有好几种：
+
+- HTML事件处理程序
+- DOM0级事件处理程序
+- DOM2级事件处理程序
+- IE事件处理程序
+
+#####1)HTML事件处理程序
+这种事件处理方式非常简单，直接在HTML中定义，然后执行函数写在javascript脚本上,而且执行函数必须暴露在`window`上：  
+```html
+<button onclick="hello()"></button>
+```
+```javascript
+function hello(){
+   console.log("hello world");
+}
+```  
+这种方式很明显的缺点是，用户如果在执行函数（`hello()`）没有加载完之前，就点击了按钮，页面就会抛出一个错误，当然这个可以通过try-catch解决，另外，在《**javascript高级程序设计**》中说道，这种方式会让HTML和javascript代码紧密耦合，维护性比较差，这个呢，我不敢苟同啊（毕竟angular 1.x都是这么做的，没感觉到难维护）。
+
+#####2)DOM0级事件处理程序
+这种方式至今仍然为所有现代浏览器做支持。原因是简单、且具有跨浏览器的优势。   
+每个元素（包括window和document）都有自己的事件处理程序属性，这些属性通常全部小写。例如onclick。将这种属性的值设置为一个函数，就可以指定事件处理程序了，如：  
+```html
+<button id="button"></button>
+```
+```javascript
+var $btn = document.getElementById("button");
+$btn.onclick = function(){
+	console.log("hello world");
+};
+``` 
+在使用DOM0级事件处理程序时，执行函数被认为是元素的方法，因此，这时候执行函数里的作用域就是当前元素了，这也是为什么`this`引用会指向元素而不是`window`的原因了。以这种方式添加的事件处理程序会在事件流的**冒泡阶段**被处理。
+值得注意的是，用DOM0级事件处理程序时，会遇到一种情况，就是一个元素只能绑定一个同类型的事件，即一个元素不能同时绑定多个click事件,如果绑定多个的话，最后一个会覆盖前面所有绑定了（执行函数被认为是元素的方法，当然会覆盖了）。   
+如果要注销元素的事件处理程序的话，很简单，只要将该元素的事件处理程序设置为null即可（同时也会注销HTML事件处理程序中相应的属性），比如:   
+```javascript
+$btn.onclick = null;
+```  
+#####2)DOM2级事件处理程序
