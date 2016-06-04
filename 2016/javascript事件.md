@@ -110,10 +110,81 @@ $btn.onclick = function(){
 	console.log("hello world");
 };
 ``` 
-在使用DOM0级事件处理程序时，执行函数被认为是元素的方法，因此，这时候执行函数里的作用域就是当前元素了，这也是为什么`this`引用会指向元素而不是`window`的原因了。以这种方式添加的事件处理程序会在事件流的**冒泡阶段**被处理。
-值得注意的是，用DOM0级事件处理程序时，会遇到一种情况，就是一个元素只能绑定一个同类型的事件，即一个元素不能同时绑定多个click事件,如果绑定多个的话，最后一个会覆盖前面所有绑定了（执行函数被认为是元素的方法，当然会覆盖了）。   
-如果要注销元素的事件处理程序的话，很简单，只要将该元素的事件处理程序设置为null即可（同时也会注销HTML事件处理程序中相应的属性），比如:   
+在使用DOM0级事件处理程序时，执行函数被认为是元素的方法。因此，这时候执行函数里的作用域就是当前元素了，这也是为什么`this`引用会指向元素而不是`window`的原因了。以这种方式添加的事件处理程序会在事件流的**冒泡阶段**被处理。   
+值得注意的是，用DOM0级事件处理程序时，会遇到一种情况，就是一个元素只能绑定一个同类型的事件，即一个元素不能同时绑定多个click事件,如果绑定多个的话，最后一个会覆盖前面所有绑定了（执行函数被认为是元素的方法，当然会覆盖了）。    
+如果要注销元素的事件处理程序的话，很简单，只要将该元素的事件处理程序设置为`null`即可（同时也会注销HTML事件处理程序中相应的属性），比如:   
 ```javascript
 $btn.onclick = null;
 ```  
-#####2)DOM2级事件处理程序
+#####3)DOM2级事件处理程序
+
+“**DOM2级事件**”定义两个方法：`addEventListener`和`removeEventListener`。它们都接受3个参数：**事件名**、**事件处理程序的函数**、**一个布尔值**（`true`表示在捕获阶段调用事件处理程序函数、`false`表示在冒泡阶段调用事件处理程序，默认为`flase`）。为一个元素绑定事件处理程序，并在冒泡阶段调用，例如：  
+```javascript
+var $btn = document.getElementById("btn");
+btn.addEventListener("click",function(){
+	console.log(this);
+},false);
+```  
+那么，为这个元素注销绑定的事件处理程序，应该是：
+```javascript
+var $btn = document.getElementById("btn");
+btn.removeEventListener("click",function(){
+	console.log(this);
+},false);
+```  
+Sorry，这样是注销不了的。实际上，DOM2事件处理程序的规范要求，`addEventListener`和`removeEventListener`传入的事件处理程序函数必须相同，上面的例子是因为函数的引用地址不同。因此，我们可以这样处理：
+```javascript
+var $btn = document.getElementById("btn");
+var handlder = function(){
+	console.log(this);
+};
+btn.addEventListener("click",handlder,false);
+btn.removeEventListener("click",handlder,false);
+``` 
+
+另外，DOM2级事件处理程序，允许一个元素同时注册同个类型的事件的。我们知道`IE9+`,`FireFox`,`Safari`,`Chrome`,`Opera`都是兼容**DOM事件流**的，所以同样也兼容**DOM2级事件处理程序**。
+
+#####4)IE事件处理程序
+我们“可（zuo）爱（si）”的IE浏览器实现了与DOM2级处理程序类似的方法：`attachEvent`和`detachEvent`。不过这两个方法分别接受两个参数：`on`+事件名、事件处理程序函数。由于IE8及更早版本只支持事件冒泡，所以通过attachEvent添加的事件处理程序都会被添加到冒泡阶段。同样的，我们为一个元素注册或注销事件处理程序时，可以这么写：
+```javascript
+var $btn = document.getElementById("btn");
+var handlder = function(){
+	console.log(this);
+};
+$btn.attachEvent("onclick",handlder);
+$btn.detachEvent("onclick",handlder);
+```  
+
+这里有几点要注意的：  
+
+- 我们发现attachEvent的第一个参数并不是直接传事件名`click`，而是加了"on"。
+- 用`console.log`打印出来`this`是指向`window`,而不是元素本身。卧槽，IE小朋友，你确定这个不是bug吗？
+- 用attachEvent注册多个同类型的事件处理程序函数时，函数并不是按照他们的定义顺序执行，而是相反的顺序执行。
+
+####干货
+扯了这么多，不知道你看晕了没有。没关系，这里留一个经典的干货，**跨浏览器的事件处理程序**：
+```javascript
+var EventUtil = {
+	addEvent:function(element,type,handler){
+		if(element.addEventListener){
+			element.addEventListener(type,handler,false);
+		}else if(element.attachEvent){
+			element.attachEvent("on"+type,handler);
+		}else{
+			element["on"+type] = handler;
+		}
+	},
+	removeEvent:function(element,type,handler){
+		if(element.removeEventListener){
+			element.removeEventListener(type,handler,false);
+		}else if(element.detachEvent){
+			element.detachEvent("on"+type,handler);
+		}else{
+			element["on"+type] = null;
+		}
+	}
+};
+```  
+
+##参考资料  
+- 《javascript高级程序设计》
