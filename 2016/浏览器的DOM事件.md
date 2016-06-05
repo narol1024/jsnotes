@@ -162,7 +162,7 @@ $btn.detachEvent("onclick",handlder);
 - 用`console.log`打印出来`this`是指向`window`,而不是元素本身。卧槽，IE小盆友，你确定这个不是bug吗？
 - 用attachEvent注册多个同类型的事件处理程序函数时，函数并不是按照他们定义时的顺序执行，而是相反的顺序执行。
 
-##简介
+##干货
 扯了这么多，不知道你看晕了没有。没关系，这里留一个经典的干货，**跨浏览器的事件处理程序**：
 ```javascript
 var EventUtil = {
