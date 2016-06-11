@@ -1,6 +1,3 @@
----
-title: call和apply的用法和区别
----
 ## 前言
 周五，广州，阴。   
 又瞎忙了一阵子了，总算忙完了公司的“代码”，自我感觉其实每天写业务代码，除了锻炼自己的业务逻辑思维，对提升技术本身并没有多少提高。很多情况下，为了赶项目，写下了连自己都没法原谅的代码。所以，只好利用休息时间来补补知识。
@@ -57,5 +54,5 @@ cat.sayName();
 从例子可以看到，Cat函数对象本身是没有sayName这个方法属性的,那为什么却可以调用呢？实际上，Animal.call(this) 的意思就是使用 Animal对象代替Cat函数对象里面的this指针，那么 Cat中不就有Animal的所有属性和方法了吗，Cat对象就能够直接调用Animal的方法以及属性了.
 
 ## 参考资料
-– JavaScript MDN [call](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call) [apply](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)  
-– ITeye博客 [JS中的call()和apply()方法](http://uule.iteye.com/blog/1158829)
+* JavaScript MDN [call](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call) [apply](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)  
+* ITeye博客 [JS中的call()和apply()方法](http://uule.iteye.com/blog/1158829)
