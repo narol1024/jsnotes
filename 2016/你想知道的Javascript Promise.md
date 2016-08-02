@@ -126,13 +126,12 @@ promise.then(function onResolve(){
 //失败是调用
 });
 ```  
-`onResolve`和`onReject`两个都是可选的参数，成功时会调用onResolve，失败时调用reject进行错误的捕捉，但是一般情况下，我们都建议使用catch进行错误的捕捉(下文做解释)。  
-catch方法的使用：   
+`onResolve`和`onReject`两个都是可选的参数，成功时会调用onResolve，失败时调用reject进行错误的捕捉，但是一般情况下，我们都建议使用catch进行错误的捕捉(下文做解释)：   
 ```javascript
 promise.then(function onResolve(){
-//成功时调用
+	//成功时调用
 }).catch(function onReject(error){
-//失败是调用
+	//失败是调用
 });
 ```  
 #### **静态方法** 
@@ -145,16 +144,88 @@ Promise提高了全局对象`Promise`，拥有一些静态方法。包括`Promis
 我们知道，`Promise`是一个构造函数，因此我们可以使用new调用Promise的构造器来进行实例化。   
 ```javascript
 var promise = new Promise(function(resolve, reject) {
-    // 异步处理
+	// 异步处理
     // 处理结束后、调用resolve 或 reject
 });
 ```
-我们看到构造函数的参数是一个函数，该函数的两个参数分别是resolve和reject，这两个参数是javascript内置提供的。resolve表示异步操作成功后调用，reject表示异步操作失败时调用。实例化之后，直接调用promise的实例化方法`then`。
+我们看到构造函数的参数是一个函数，该函数的两个参数分别是resolve和reject，这两个参数是javascript内置提供的。resolve表示异步操作成功后调用，reject表示异步操作失败时调用。实例化之后，直接调用promise的实例化方法`then`，且这个方法返回的是一个新的`promise`实例。
 ```javascript
 promise.then(function onResolve() {
-   //成功时调用
-}, function onReject(result) {
-   //失败时调用
+	//成功时调用
+}, function onReject() {
+	//失败时调用
 });
 ```
-值得注意的是，如果只想处理异步操作的情况，只需要采用`promise.then(undefined, onReject)`这种方式即可。好了，基本上，实现一个简单的promise大概就这样了。哎呀，糟了，忘记小智还要去捉精灵呢？马上送上游戏源代码：[github](https://github.com/linjinying/jsnotes/blob/master/source/promise/promise-1.html)
+相当于   
+```javascript
+promise.then(function onResolve() {
+	//成功时调用
+}).catch(function onReject(){
+	//失败时调用
+});
+```
+值得注意的是，如果只想处理异步操作的情况，只需要采用`promise.then(undefined, onReject)`这种方式即可。好了，基本上，实现一个简单的promise大概就这样了。哎呀，糟了，忘记小智还要去捉精灵呢？马上送上游戏源代码：[github](https://github.com/linjinying/jsnotes/blob/master/source/promise/promise-1.html)和游戏入口
+###Promise的链式调用
+什么鬼，你说我这个游戏有弱智？？？   
+好吧，改改改！  
+**游戏规则**：小智走进一片森林里，他尝试着搜索附件的精灵，并且有一定的机率捕捉到他们。   
+再玩这个游戏之前，我们先来学习一下Promise的链式调用(**Promise Chain**)吧。我们知道，“回调墙”从本质上来讲，任务是线性发生的，只不过`callback`的代码组织结构让人难以阅读和理解，人都习惯任务发生是一个线性结构。那么`Promise`的链式调用就是用来解决这个问题的。上文提到`promise`的实例方法`then`返回是一个新的promise对象，所以promise才得以链式调用。所以，`promise`的链式调用可以这样写：   
+```javascript
+var promise = new Promise(function(resolve,reject){
+	resolve();
+});
+var taskA = function(){
+	console.log("A done!");
+};
+var taskB = function(){
+	console.log("B done!");
+};
+promise
+.then(taskA)
+.then(taskB)
+.catch(function(error){
+	console.log(error);
+});
+```
+可以你已经注意到，`Promise`实例的参数中，是直接调用`resolve`的，其实这里我们只是用它来生成一个promise对象，但是`Promise`的静态方法`resolve`已经为我们提供了生成`promise`对象的快捷方式（Promise.reject同理），因此下面的代码来实现：   
+```javascript
+var promise = Promise.resolve();
+```   
+或者你还存在疑问，假设各个`task`之间需要传值呢？很简单，只要在每个`task`作为返回值即可。即：
+```javascript
+var promise = Promise.resolve(1);
+var taskA = function(value){
+	console.log(value);//1
+	return value + 1;
+};
+var taskB = function(value){
+	console.log(value);//2
+    return value + 2;
+};
+promise
+.then(taskA)
+.then(taskB)
+.catch(function(error){
+	console.log(error);
+});
+```
+值得注意的是，这里我们都是用`catch`来捕捉异常的。那到底用`.then`里同时指定处理对错误进行处理的函数相比，和使用 catch 又有什么异同呢？看下面的例子就明白了：
+```javascript
+function throwError() {
+    // 抛出异常
+    throw new Error("错误");
+}
+function taskA(onReject) {
+    return Promise.resolve().then(throwError, onReject);
+}
+function taskB(onReject) {
+    return Promise.resolve().then(throwError).catch(onReject);
+}
+taskA(function(){
+    console.log("taskA Error");
+});
+taskB(function(){
+    console.log("taskB Error");
+});
+```
+运行的结果是，`taskA Error`并没有被执行到，而`taskB Error`则会被执行到，那是因为TaskA虽然在`.then`的第二个参数中指定了用来错误处理的函数，但实际上它却不能捕获第一个参数 onResolve 指定的函数（本例为 throwError ）里面出现的错误。也就是说，这时候即使 throwError 抛出了异常。与此相对的是，`taskB`在throwError 中出现异常的话，在会被方法链中的下一个方法，即`.catch`所捕获，进行相应的错误处理。

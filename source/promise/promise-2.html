@@ -40,12 +40,15 @@ var sleep = function(pokemon) {
 };
 var searchPokemon = function() {
     return new Promise(function(resolve, reject) {
-        if (Math.random() > 0.3) {
-            var pokemon = pokemons[Math.round(Math.random() * 3)];
-            resolve(pokemon);
-        } else {
-            reject(new Error("附近没有精灵出没!!!"));
-        }
+        printLog("正在搜索附件的精灵...");
+        setTimeout(function() {
+            if (Math.random() > 0.3) {
+                var pokemon = pokemons[Math.round(Math.random() * 3)];
+                resolve(pokemon);
+            } else {
+                reject(new Error("附近没有精灵出没!!!"));
+            }
+        },1000);
     });
 }
 var catchPokemon = function(pokemon) {
