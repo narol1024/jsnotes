@@ -84,7 +84,9 @@ var promise = Promise.resolve();
 - Javascript的Promise A+  
 
 Promise模式是由最早由CommonJs社区提出并实现，一般用于异步操作，目的是为了消灭“回调金字塔”，提高编程体验，目前已经被ECMAScript 2015纳入标准，因此浏览器都逐渐支持了原生Promise，兼容性如图：  
+
 ![兼容性](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/7.png)  
+
 而且大家不必担心浏览器兼容的问题，关于Promise的Polyfill类库太多了，并且Polyfiill类库提供的API要比标准的多得多，比较有名的有：   
 - [es6-promise](https://github.com/jakearchibald/es6-promise)  
 - [Q.js](https://github.com/kriskowal/q)  
