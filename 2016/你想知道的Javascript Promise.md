@@ -141,6 +141,7 @@ Promise提高了全局对象`Promise`，拥有一些静态方法。包括`Promis
 **pokemon GO**是最近火爆全球的一款手游，玩家可以对现实世界中出现的精灵进行探索捕捉、战斗以及交换，既然目前中国区还玩不了，今天我们就写一个简（nao）单（can）版的pokemon Go来玩玩吧。
 #### 创建Promise
 **游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵，并且有一定的机率捕捉到。  
+
 我们知道，`Promise`是一个构造函数，因此我们可以使用new调用Promise的构造器来进行实例化。   
 ```javascript
 var promise = new Promise(function(resolve, reject) {
@@ -156,4 +157,4 @@ promise.then(function onResolve() {
    //失败时调用
 });
 ```
-值得注意的是，如果只想处理异步操作的情况，只需要采用`promise.then(undefined, onReject)`这种方式即可。好了，基本上，实现一个简单的promise大概就这样了。哎呀，糟了，忘记小智还要去捉精灵呢？马上送上游戏源代码：   
+值得注意的是，如果只想处理异步操作的情况，只需要采用`promise.then(undefined, onReject)`这种方式即可。好了，基本上，实现一个简单的promise大概就这样了。哎呀，糟了，忘记小智还要去捉精灵呢？马上送上游戏源代码：[github](https://github.com/linjinying/jsnotes/blob/master/source/promise/promise-1.html)
