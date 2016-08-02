@@ -6,7 +6,7 @@
 - [游戏环节](#p-4)
 
 
-## <span id="p-1">前言</span>
+## <div id="p-1">前言</div>
 啊A同学是一名web开发者，自称精通javascript，css+div，photoshop等各项屌炸天技能，可谓自信心爆灯了。可是有一天啊B同学是搞Java的，他在写JS代码时，发现多个接口异步请求数据时，每个接口都依赖上一个接口的结果，写出来的代码是这样的：  
 ```javascript
 $.ajax({
@@ -40,7 +40,7 @@ $.ajax({
 这时候，傲气的啊C同学又过来安利了，试试JS的Promise吧，专治“回调金字塔”100年。   
 好吧，我不装了！是的，啊A同学就是我。那什么是Promise呢？  
 
-## <span id="p-2">什么是Promise</span>
+## <div id="p-2">什么是Promise</div>
 承诺？ 誓言？  
 好吧，知道你无法理解，咱们程序员都是单(gu)纯（du）可(zhong)爱（lao），怎么可能会理解怎么感性的词儿呢？那么按照音译-**[普罗米修斯](https://zh.wikipedia.org/wiki/%E6%99%AE%E7%BD%97%E7%B1%B3%E4%BF%AE%E6%96%AF)**，一个希腊神话的英雄,名字的意思是“先见之明”。
 
@@ -94,7 +94,7 @@ Promise模式是由最早由CommonJs社区提出并实现，一般用于异步�
 
 大家在挑Polyfill类库时，应该首先考虑是否支持Promise A+规范。
 
-## <span id="p-3">细说Promise</span>
+## <div id="p-3">细说Promise</div>
 看到这里，我想你稍微了解什么是Promise以及它能解决什么问题了。   
 我们继续了解Promise吧，以下是基于ECMAScript 2015的Promise规范标准来阐述的。
 ### Promise的状态  
@@ -141,7 +141,7 @@ promise.then(function onResolve(){
 ```  
 #### **静态方法** 
 Promise提高了全局对象`Promise`，拥有一些静态方法。包括`Promise.all()`、`Promise.race`、`Promise.resolve`、`Promise.reject`等，主要都是一些对Promise进行操作的辅助方法。  
-## <del> 基本用法 </del><span id="p-4">游戏环节</span>
+## <div id="p-4"><del> 基本用法 </del>游戏环节</div>
 **pokemon GO**是最近火爆全球的一款手游，玩家可以对现实世界中出现的精灵进行探索捕捉、战斗以及交换，既然目前中国区还玩不了，今天我们就写一个简（nao）单（can）版的pokemon Go来玩玩吧。
 ### 创建Promise
 **游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵，并且有一定的机率捕捉到。  
