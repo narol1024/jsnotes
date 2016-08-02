@@ -1,0 +1,51 @@
+.pokemon-0 {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  background-image: url(../img/0.png); }
+
+.pokemon-1 {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  background-image: url(../img/1.png); }
+
+.pokemon-2 {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  background-image: url(../img/2.png); }
+
+.pokemon-3 {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  background-image: url(../img/3.png); }
+
+.pokemon-4 {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  background-image: url(../img/4.png); }
+
+/*# sourceMappingURL=icon.css.map */
