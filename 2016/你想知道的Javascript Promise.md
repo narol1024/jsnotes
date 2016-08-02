@@ -143,7 +143,7 @@ promise.then(function onResolve(){
 Promise提高了全局对象`Promise`，拥有一些静态方法。包括`Promise.all()`、`Promise.race`、`Promise.resolve`、`Promise.reject`等，主要都是一些对Promise进行操作的辅助方法。  
 ## <del> 基本用法 </del><span id="p-4">游戏环节</span>
 **pokemon GO**是最近火爆全球的一款手游，玩家可以对现实世界中出现的精灵进行探索捕捉、战斗以及交换，既然目前中国区还玩不了，今天我们就写一个简（nao）单（can）版的pokemon Go来玩玩吧。
-#### 创建Promise
+### 创建Promise
 **游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵，并且有一定的机率捕捉到。  
 
 我们知道，`Promise`是一个构造函数，因此我们可以使用new调用Promise的构造器来进行实例化。   y
@@ -317,3 +317,8 @@ promise.then(function onResolved(value) {
 ``` 
 跟`Promise.all`不一样，`Promise.race`只要有一个promise对象进入 resolved 或者 rejected 状态的话，就会继续进行后面的处理，换句话说，假设`p1`的状态改变了，`p2`和`p3`还是会继续运行。   
 送上最后一个游戏的源代码：[游戏入口](http://codepen.io/linjinying/pen/GqXrKx)   
+
+## 参考资料
+* [JavaScript MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)  
+* [ECMAScript 6 入门之Promise](http://es6.ruanyifeng.com/#docs/promise)  
+* [JavaScript Promise迷你书](http://liubin.org/promises-book/#introduction) 
