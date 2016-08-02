@@ -40,9 +40,9 @@ $.ajax({
 
 举个例子，如果C任务的执行依赖B任务，而B任务的执行，又依赖A任务，。如果用回调视的代码实现的话，大概是这样的：  
 ```javascript
-do('taskA',function(){
-  do('taskB',function(){
-	do('taskC',function(){
+taskA(function(){
+  taskB(function(){
+	taskC(function(){
 		...
 	});
   });
@@ -92,7 +92,6 @@ Promise模式是由最早由CommonJs社区提出并实现，一般用于异步�
 ## 细说Promise
 看到这里，我想你稍微了解什么是Promise以及它能解决什么问题了。   
 我们继续了解Promise吧，以下是基于ECMAScript 2015的Promise规范标准来阐述的。
-### Promise
 ### Promise的状态  
 从Promise模式的角度看，完成一个任务，可分成3种状态。   
 
@@ -127,7 +126,7 @@ promise.then(function onResolve(){
 //失败是调用
 });
 ```  
-`onResolve`和`onReject`两个都是可选的参数，成功时会调用onResolve，失败时调用reject进行错误的捕捉，但是一般情况下，我们都会用catch进行错误的捕捉(下文会阐述原因)。  
+`onResolve`和`onReject`两个都是可选的参数，成功时会调用onResolve，失败时调用reject进行错误的捕捉，但是一般情况下，我们都建议使用catch进行错误的捕捉(下文做解释)。  
 catch方法的使用：   
 ```javascript
 promise.then(function onResolve(){
@@ -138,6 +137,23 @@ promise.then(function onResolve(){
 ```  
 #### **静态方法** 
 Promise提高了全局对象`Promise`，拥有一些静态方法。包括`Promise.all()`、`Promise.race`、`Promise.resolve`、`Promise.reject`等，主要都是一些对Promise进行操作的辅助方法。  
-### 基本用法
+### <del> 基本用法 </del>游戏环节
+**pokemon GO**是最近火爆全球的一款手游，玩家可以对现实世界中出现的精灵进行探索捕捉、战斗以及交换，既然目前中国区还玩不了，今天我们就写一个简（nao）单（can）版的pokemon Go来玩玩吧。
 #### 创建Promise
-**pokemon GO**是最近火爆全球的手游，
+**游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵，并且有一定的机率捕捉到。  
+我们知道，`Promise`是一个构造函数，因此我们可以使用new调用Promise的构造器来进行实例化。   
+```javascript
+var promise = new Promise(function(resolve, reject) {
+    // 异步处理
+    // 处理结束后、调用resolve 或 reject
+});
+```
+我们看到构造函数的参数是一个函数，该函数的两个参数分别是resolve和reject，这两个参数是javascript内置提供的。resolve表示异步操作成功后调用，reject表示异步操作失败时调用。实例化之后，直接调用promise的实例化方法`then`。
+```javascript
+promise.then(function onResolve() {
+   //成功时调用
+}, function onReject(result) {
+   //失败时调用
+});
+```
+值得注意的是，如果只想处理异步操作的情况，只需要采用`promise.then(undefined, onReject)`这种方式即可。好了，基本上，实现一个简单的promise大概就这样了。哎呀，糟了，忘记小智还要去捉精灵呢？马上送上游戏源代码：   
