@@ -1,4 +1,12 @@
-## 前言
+## 目录
+
+- [前言](#p-1)
+- [什么是Promise](#p-2)
+- [细说Promise](#p-3)
+- [游戏环节](#p-4)
+
+
+## <div id="p-1">前言</div>
 啊A同学是一名web开发者，自称精通javascript，css+div，photoshop等各项屌炸天技能，可谓自信心爆灯了。可是有一天啊B同学是搞Java的，他在写JS代码时，发现多个接口异步请求数据时，每个接口都依赖上一个接口的结果，写出来的代码是这样的：  
 ```javascript
 $.ajax({
@@ -32,7 +40,7 @@ $.ajax({
 这时候，傲气的啊C同学又过来安利了，试试JS的Promise吧，专治“回调金字塔”100年。   
 好吧，我不装了！是的，啊A同学就是我。那什么是Promise呢？  
 
-## 什么是Promise
+## <div id="p-2">什么是Promise</div>
 承诺？ 誓言？  
 好吧，知道你无法理解，咱们程序员都是单(gu)纯（du）可(zhong)爱（lao），怎么可能会理解怎么感性的词儿呢？那么按照音译-**[普罗米修斯](https://zh.wikipedia.org/wiki/%E6%99%AE%E7%BD%97%E7%B1%B3%E4%BF%AE%E6%96%AF)**，一个希腊神话的英雄,名字的意思是“先见之明”。
 
@@ -89,7 +97,7 @@ Promise模式是由最早由CommonJs社区提出并实现，一般用于异步�
 
 大家在挑Polyfill类库时，应该首先考虑是否支持Promise A+规范。
 
-## 细说Promise
+## <div id="p-3">细说Promise</div>
 看到这里，我想你稍微了解什么是Promise以及它能解决什么问题了。   
 我们继续了解Promise吧，以下是基于ECMAScript 2015的Promise规范标准来阐述的。
 ### Promise的状态  
@@ -136,7 +144,7 @@ promise.then(function onResolve(){
 ```  
 #### **静态方法** 
 Promise提高了全局对象`Promise`，拥有一些静态方法。包括`Promise.all()`、`Promise.race`、`Promise.resolve`、`Promise.reject`等，主要都是一些对Promise进行操作的辅助方法。  
-### <del> 基本用法 </del>游戏环节
+## <del> 基本用法 </del><div id="p-4">游戏环节</div>
 **pokemon GO**是最近火爆全球的一款手游，玩家可以对现实世界中出现的精灵进行探索捕捉、战斗以及交换，既然目前中国区还玩不了，今天我们就写一个简（nao）单（can）版的pokemon Go来玩玩吧。
 #### 创建Promise
 **游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵，并且有一定的机率捕捉到。  
@@ -164,8 +172,8 @@ promise.then(function onResolve() {
 	//失败时调用
 });
 ```
-值得注意的是，如果只想处理异步操作的情况，只需要采用`promise.then(undefined, onReject)`这种方式即可。好了，基本上，实现一个简单的promise大概就这样了。哎呀，糟了，忘记小智还要去捉精灵呢？马上送上游戏源代码：[github](https://github.com/linjinying/jsnotes/blob/master/source/promise/promise-1.html)和游戏入口
-###Promise的链式调用
+值得注意的是，如果只想处理异步操作的情况，只需要采用`promise.then(undefined, onReject)`这种方式即可。好了，基本上，实现一个简单的promise大概就这样了。哎呀，糟了，忘记小智还要去捉精灵啦？马上送上游戏：[游戏入口](http://codepen.io/linjinying/pen/grdxAm/)
+###  Promise的链式调用
 什么鬼，你说我这个游戏有弱智？？？   
 好吧，改改改！  
 **游戏规则**：小智走进一片森林里，他尝试着搜索附件的精灵，并且有一定的机率捕捉到他们。   
@@ -212,7 +220,6 @@ promise
 值得注意的是，这里我们都是用`catch`来捕捉异常的。那到底用`.then`里同时指定处理对错误进行处理的函数相比，和使用 catch 又有什么异同呢？看下面的例子就明白了：
 ```javascript
 function throwError() {
-    // 抛出异常
     throw new Error("错误");
 }
 function taskA(onReject) {
@@ -228,4 +235,93 @@ taskB(function(){
     console.log("taskB Error");
 });
 ```
-运行的结果是，`taskA Error`并没有被执行到，而`taskB Error`则会被执行到，那是因为TaskA虽然在`.then`的第二个参数中指定了用来错误处理的函数，但实际上它却不能捕获第一个参数 onResolve 指定的函数（本例为 throwError ）里面出现的错误。也就是说，这时候即使 throwError 抛出了异常。与此相对的是，`taskB`在throwError 中出现异常的话，在会被方法链中的下一个方法，即`.catch`所捕获，进行相应的错误处理。
+运行的结果是，`taskA Error`并没有被执行到，而`taskB Error`则会被执行到，那是因为TaskA虽然在`.then`的第二个参数中指定了用来错误处理的函数，但实际上它却不能捕获第一个参数 onResolve 指定的函数（本例为 throwError ）里面出现的错误。也就是说，这时候即使 throwError 抛出了异常。与此相对的是，`taskB`在throwError 中出现异常的话，在会被方法链中的下一个方法，即`.catch`所捕获，进行相应的错误处理。   
+学习了`promise`的链式调后，我们来分析到一下游戏规则，大概是这样的：
+
+
+图
+
+
+
+所以用Promise模式来实现的话，代码结构会变得非常清晰。   
+送上游戏源代码：[游戏入口](http://codepen.io/linjinying/pen/qNrXqE)
+### Promise.all
+**游戏规则**：小智又走进一片森林里，这天他的运气比较好，同时出现了4只精灵，但他必须全部捉到才能通关，否则只要有一个捕捉不到，即算游戏失败。   
+老规矩，在玩游戏之前，我们先来学习理论知识。`.all`是Promise提供的一个静态方法，用于将多个Promise实例，包装成一个新的Promise实例。例如：   
+```javascript  
+var p1 = new Promise(function(resolve, reject) {
+    var value = Math.random();
+    if (value > 0.5) {
+        resolve(value);
+    } else {
+        reject("p1:" + value);
+    }
+});
+var p2 = new Promise(function(resolve, reject) {
+    var value = Math.random();
+    if (value > 0.5) {
+        resolve(value);
+    } else {
+        reject("p2:" + value);
+    }
+});
+var p3 = new Promise(function(resolve, reject) {
+    var value = Math.random();
+    if (value > 0.5) {
+        resolve(value);
+    } else {
+        reject("p3:" + value);
+    }
+});
+var promise = Promise.all([p1, p2, p3]);
+promise.then(function onResolved(value) {
+    console.info(value);//[0.5985190889530145, 0.6911524297857181, 0.8921527493860548]
+}).catch(function onRejected(error) {
+    console.info(error);//p3:0.46978503261829485
+});
+```   
+上面代码中，Promise.all方法接受一个数组作为参数，p1、p2、p3都是Promise对象的实例，如果不是，就会先调用Promise.resolve方法，将参数转为Promise实例，再进一步处理，p1、p2、p3并不是一个个的顺序执行的，而是同时开始、并行执行的。。   
+promise的状态由p1、p2、p3决定，分成两种情况：   
+
+- 只有p1、p2、p3的状态都变成resolved，promise的状态才会变成resolved，此时p1、p2、p3的返回值组成一个数组，传递给promise的回调函数。
+- 只要p1、p2、p3之中有一个被rejected，promise的状态就变成rejected，此时第一个被reject的实例的返回值，会传递给promise的回调函数。  
+
+看到这里，你是不是发现，`Promise.all`就是我们想要的东西了吧。   
+送上游戏源代码：[游戏入口](http://codepen.io/linjinying/pen/PzdKWj)   
+### Promise.race
+游戏规则：小智又走进一片森林里，同时出现了4只精灵，这时候他同时扔出口袋里的4个精灵球，当只要有一只精灵球出现捕捉成功或者捕捉失败时，就立马结束游戏。   
+`Promise.race`也是`Promise`的静态方法，同样是将多个Promise实例，包装成一个新的Promise实例。例如：  
+```javascript  
+var p1 = new Promise(function(resolve, reject) {
+    var value = Math.random();
+    if (value > 0.5) {
+        resolve("p1成功");
+    } else {
+        reject("p1失败");
+    }
+});
+var p2 = new Promise(function(resolve, reject) {
+    var value = Math.random();
+    if (value > 0.5) {
+        resolve("p2成功");
+    } else {
+        reject("p2失败");
+    }
+});
+var p3 = new Promise(function(resolve, reject) {
+    var value = Math.random();
+    if (value > 0.5) {
+        resolve("p3成功");
+    } else {
+        reject("p3失败");
+    }
+});
+var promise = Promise.race([p1, p2, p3]);
+promise.then(function onResolved(value) {
+    console.info(value);//p1成功
+}).catch(function onRejected(error) {
+    console.info(error);//p1失败
+});
+``` 
+跟`Promise.all`不一样，`Promise.race`只要有一个promise对象进入 resolved 或者 rejected 状态的话，就会继续进行后面的处理，换句话说，假设`p1`的状态改变了，`p2`和`p3`还是会继续运行。   
+送上最后一个游戏的源代码：[游戏入口](http://codepen.io/linjinying/pen/GqXrKx)   

@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,  minimum-scale=1.0, maximum-scale=1.0" />
     <title>promise-2</title>
     <link rel="stylesheet" href="./css/icon.css">
 </head>
@@ -42,7 +43,7 @@ var searchPokemon = function() {
     return new Promise(function(resolve, reject) {
         printLog("正在搜索附件的精灵...");
         setTimeout(function() {
-            if (Math.random() > 0.3) {
+            if (Math.random() > 0.2) {
                 var pokemon = pokemons[Math.round(Math.random() * 3)];
                 resolve(pokemon);
             } else {
@@ -53,7 +54,7 @@ var searchPokemon = function() {
 }
 var catchPokemon = function(pokemon) {
     return new Promise(function(resolve, reject) {
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0.4) {
             resolve(pokemon);
         } else {
             reject(new Error(pokemonToHTML(pokemon) + "溜走啦~~"));
