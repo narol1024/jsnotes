@@ -6,7 +6,7 @@
 - [游戏环节](#p-4)
 
 
-## <div id="p-1">前言</div>
+## <span id="p-1">前言</span>
 啊A同学是一名web开发者，自称精通javascript，css+div，photoshop等各项屌炸天技能，可谓自信心爆灯了。可是有一天啊B同学是搞Java的，他在写JS代码时，发现多个接口异步请求数据时，每个接口都依赖上一个接口的结果，写出来的代码是这样的：  
 ```javascript
 $.ajax({
@@ -40,7 +40,7 @@ $.ajax({
 这时候，傲气的啊C同学又过来安利了，试试JS的Promise吧，专治“回调金字塔”100年。   
 好吧，我不装了！是的，啊A同学就是我。那什么是Promise呢？  
 
-## <div id="p-2">什么是Promise</div>
+## <span id="p-2">什么是Promise</span>
 承诺？ 誓言？  
 好吧，知道你无法理解，咱们程序员都是单(gu)纯（du）可(zhong)爱（lao），怎么可能会理解怎么感性的词儿呢？那么按照音译-**[普罗米修斯](https://zh.wikipedia.org/wiki/%E6%99%AE%E7%BD%97%E7%B1%B3%E4%BF%AE%E6%96%AF)**，一个希腊神话的英雄,名字的意思是“先见之明”。
 
@@ -56,12 +56,9 @@ taskA(function(){
   });
 });
 ```  
-这就是著名的回调金字塔，如果异步的任务一，维护起来将是灾难性的。  
-这时候神话的英雄普罗米修斯就来拯救大家了，普罗米修斯有先知的能力，因此，他可以规划好每个任务的发展：
-
-图
-
-
+这就是著名的回调金字塔，如果异步的任务一多，维护起来将是灾难性的。  
+这时候神话的英雄普罗米修斯就来拯救大家了，普罗米修斯有先知的能力，因此，他可以规划好每个任务的发展：  
+![普罗米修斯眼中的任务](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/6.png)  
 因此如果普罗米修斯会写代码的话，代码的实现大概是这样的：   
 ```javascript
 var taskA = function(){
@@ -87,9 +84,7 @@ var promise = Promise.resolve();
 - Javascript的Promise A+  
 
 Promise模式是由最早由CommonJs社区提出并实现，一般用于异步操作，目的是为了消灭“回调金字塔”，提高编程体验，目前已经被ECMAScript 2015纳入标准，因此浏览器都逐渐支持了原生Promise，兼容性如图：  
-
-图
-
+![兼容性](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/7.png)  
 而且大家不必担心浏览器兼容的问题，关于Promise的Polyfill类库太多了，并且Polyfiill类库提供的API要比标准的多得多，比较有名的有：   
 - [es6-promise](https://github.com/jakearchibald/es6-promise)  
 - [Q.js](https://github.com/kriskowal/q)  
@@ -97,7 +92,7 @@ Promise模式是由最早由CommonJs社区提出并实现，一般用于异步�
 
 大家在挑Polyfill类库时，应该首先考虑是否支持Promise A+规范。
 
-## <div id="p-3">细说Promise</div>
+## <span id="p-3">细说Promise</span>
 看到这里，我想你稍微了解什么是Promise以及它能解决什么问题了。   
 我们继续了解Promise吧，以下是基于ECMAScript 2015的Promise规范标准来阐述的。
 ### Promise的状态  
@@ -144,12 +139,12 @@ promise.then(function onResolve(){
 ```  
 #### **静态方法** 
 Promise提高了全局对象`Promise`，拥有一些静态方法。包括`Promise.all()`、`Promise.race`、`Promise.resolve`、`Promise.reject`等，主要都是一些对Promise进行操作的辅助方法。  
-## <del> 基本用法 </del><div id="p-4">游戏环节</div>
+## <del> 基本用法 </del><span id="p-4">游戏环节</span>
 **pokemon GO**是最近火爆全球的一款手游，玩家可以对现实世界中出现的精灵进行探索捕捉、战斗以及交换，既然目前中国区还玩不了，今天我们就写一个简（nao）单（can）版的pokemon Go来玩玩吧。
 #### 创建Promise
 **游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵，并且有一定的机率捕捉到。  
 
-我们知道，`Promise`是一个构造函数，因此我们可以使用new调用Promise的构造器来进行实例化。   
+我们知道，`Promise`是一个构造函数，因此我们可以使用new调用Promise的构造器来进行实例化。   y
 ```javascript
 var promise = new Promise(function(resolve, reject) {
 	// 异步处理
@@ -236,13 +231,8 @@ taskB(function(){
 });
 ```
 运行的结果是，`taskA Error`并没有被执行到，而`taskB Error`则会被执行到，那是因为TaskA虽然在`.then`的第二个参数中指定了用来错误处理的函数，但实际上它却不能捕获第一个参数 onResolve 指定的函数（本例为 throwError ）里面出现的错误。也就是说，这时候即使 throwError 抛出了异常。与此相对的是，`taskB`在throwError 中出现异常的话，在会被方法链中的下一个方法，即`.catch`所捕获，进行相应的错误处理。   
-学习了`promise`的链式调后，我们来分析到一下游戏规则，大概是这样的：
-
-
-图
-
-
-
+学习了`promise`的链式调后，我们来分析到一下游戏规则，大概是这样的：  
+![游戏规则](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/8.png)  
 所以用Promise模式来实现的话，代码结构会变得非常清晰。   
 送上游戏源代码：[游戏入口](http://codepen.io/linjinying/pen/qNrXqE)
 ### Promise.all
