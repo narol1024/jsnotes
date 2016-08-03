@@ -8,30 +8,30 @@
 
 
 ## <div id="p-1">前言</div>
-本文旨在让大家对 `Javascript Promise` 有初步的认识，未为对Javascript Promise做深入的阐述，如有表述错误，欢迎大家指正。  
+本文旨在让大家对 `Javascript Promise` 有初步的认识，未对Javascript Promise做深入的阐述，如有表述错误，欢迎大家指正。  
 在实际的项目开发中，我想大家或多或少都会碰到下面这种情况，多个接口异步请求数据时，每个接口的调用都得依赖上一个接口的结果，用代码表示大概是这样的：
 ```javascript
 $.ajax({
     url: '/a',
-    success: function (data) {
-		if(data.code === 1){
-			$.ajax({
-	            url: '/b',
-	            success: function (data) {
-	                 if(data.code === 1){
-						$.ajax({
-				            url: '/c',
-				            success: function (data) {
-				                 // ......
-				            }
-				        });
-					}
-	            }
-	        });
-		}	
+    success: function(data) {
+        if (data.code === 1) {
+            $.ajax({
+                url: '/b',
+                success: function(data) {
+                    if (data.code === 1) {
+                        $.ajax({
+                            url: '/c',
+                            success: function(data) {
+                                // ......
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 });
-```  
+```
 看完上面的代码，强迫症是不是又犯，没错！这就是我们常说的 **回调金字塔** ，当异步操作越来越多时，可能还需要再向领导申请一台显示器。   
 大家也许听过Javasript Promise可以解决回调金字塔的问题，可能是对兼容性的怀疑，又或者觉得是**ECMAScript 2015**标准里的东西，感觉好难入手的样子。其实Javasript Promise只是一种代码组织模式而已，而且已经有好多类库实现了Promise了，比如`jQuery`,`angular`,`Q.js`等。
 ## <div id="p-2">什么是Promise</div>
@@ -41,31 +41,35 @@ $.ajax({
 
 如果用回调的方式实现的话，大概是这样的：    
 ```javascript
-taskA(function(){
-  taskB(function(){
-	taskC(function(){
-		...
-	});
-  });
+taskA(function() {
+    taskB(function() {
+        taskC(function() {
+            ...
+        });
+    });
 });
-```  
+
+```
+
 这样写的话，如果任务一多，代码的可维护性会变得非常的差，阅读起来也费劲。   
 我们知道，普罗米修斯具有先知的能力，因此他可以规划好每个任务的发展：  
 ![普罗米修斯眼中的任务](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/6.png)  
 因此如果普罗米修斯会写代码的话，代码的实现大概是这样的：   
 ```javascript
-var taskA = function(){};
-var taskB = function(){};
-var taskC = function(){};
+var taskA = function() {};
+var taskB = function() {};
+var taskC = function() {};
 var promise = Promise.resolve();
-	promise
-	.then(taskA)
-	.then(taskB)
-	.then(taskC)
-	.catch(function(){
-	  	console.info("the End");
-	});
-```  
+promise
+    .then(taskA)
+    .then(taskB)
+    .then(taskC)
+    .catch(function() {
+        console.info("the End");
+    });
+
+```
+
 先不说是否理解上面的代码，但是这种代码组织模式是不是更符合我们的直觉呢？其实这种模式就是所谓的 **Promise模式**，之所以称为模式，是因为它不是Javascript特有的东西，在各种语言平台都出现过:
 - Java的java.util.concurrent.Futrue   
 - Python的Twisted deferreds and PEP-3148 futures  
@@ -107,27 +111,32 @@ Promise的状态转化只发生一次（从`pending`变成`resolve`或变成`rej
 #### **构造器**   
 类似Javascript的日期构造器 **Date** ,因此我们可以用构造函数 **Promise** 来创建一个promise对象，比如：  
 ```javascript
-var promise = new Promise(function(resolve,reject){
-   //处理异步,结束后调用resolve或reject
+var promise = new Promise(function(resolve, reject) {
+    //处理异步,结束后调用resolve或reject
 });
-```  
+
+```
+
 #### **实例方法**  
 我们知道构造函数通过new生成的对象，一般含有实例方法，Promise也不例外。上面的promise对象有两个实例方法，分别是`then`，`catch`方法。then方法的使用:   
 ```javascript
-promise.then(function onResolve(){
-//成功时调用
-},function onReject(){
-//失败是调用
+promise.then(function onResolve() {
+    //成功时调用
+}, function onReject() {
+    //失败是调用
 });
-```  
+
+```
+
 `onResolve`和`onReject`两个都是可选的参数，异步操作成功时会调用`onResolve`，失败时则调用`onReject`，但是一般情况下，我们都建议使用`catch`进行错误的捕捉(下文做解释)：   
 ```javascript
-promise.then(function onResolve(){
-	//成功时调用
-}).catch(function onReject(error){
-	//失败是调用
+promise.then(function onResolve() {
+    //成功时调用
+}).catch(function onReject(error) {
+    //失败是调用
 });
-```  
+```
+
 #### **静态方法** 
 `Promise`提供了全局对象`window.Promise`，这个对象拥有一些静态方法。其中包括`Promise.all()`、`Promise.race`、`Promise.resolve`、`Promise.reject`等，主要都是一些对Promise进行操作的辅助方法。  
 ## <div id="p-4"><del> 基本用法 </del>游戏环节</div>
@@ -138,26 +147,29 @@ promise.then(function onResolve(){
 从上文我们知道，**Promise** 是一个构造函数，因此我们可以使用 **new** 来实例化对象。
 ```javascript
 var promise = new Promise(function(resolve, reject) {
-	// 异步处理
+    // 异步处理
     // 处理结束后、调用resolve 或 reject
 });
 ```
+
 我们看到 **Promise** 在实例化的时是传入了一个函数，该函数的两个参数分别是`resolve`和`reject`，这两个参数是JS内置提供的。`resolve`表示异步操作成功后调用，`reject`表示异步操作失败时调用。实例化之后，直接调用promise的方法**then**，而then方法接收两个参数函数，第一个参数函数响应了异步操作成功，第二个则响应异步操作失败，而`then`最终返回的是一个新的promise实例。
 ```javascript
 promise.then(function onResolve() {
-	//成功时调用
+    //成功时调用
 }, function onReject() {
-	//失败时调用
+    //失败时调用
 });
 ```
+
 相当于   
 ```javascript
 promise.then(function onResolve() {
-	//成功时调用
-}).catch(function onReject(){
-	//失败时调用
+    //成功时调用
+}).catch(function onReject() {
+    //失败时调用
 });
 ```
+
 值得注意的是，如果只想处理异步操作的情况，只需要采用`promise.then(undefined, onReject)`这种方式即可。好了，基本上，实现一个简单的promise大概就这样了。哎呀，糟了，忘记小智还要捉精灵。。。马上送上游戏：[游戏入口](http://codepen.io/linjinying/pen/grdxAm/)
 ###  Promise的链式调用
 什么鬼，你说我这个游戏有弱智？？？   
@@ -167,62 +179,68 @@ promise.then(function onResolve() {
  
 再玩这个游戏之前，先来学习一下Promise的**链式调用(Promise Chain)**吧。我们知道，“回调墙”从本质上来讲，任务是线性发生的，只不过`callback`的代码组织结构让人难以阅读和理解，人都习惯任务发生是一个线性结构。那么`Promise`的链式调用就是用来解决这个问题的。上文提到`promise`的实例方法`then`返回是一个新的promise对象，所以promise才得以链式调用。因此，`promise`的链式调用可以这样写：   
 ```javascript
-var promise = new Promise(function(resolve,reject){
-	resolve();
+var promise = new Promise(function(resolve, reject) {
+    resolve();
 });
-var taskA = function(){
-	console.log("A done!");
+var taskA = function() {
+    console.log("A done!");
 };
-var taskB = function(){
-	console.log("B done!");
+var taskB = function() {
+    console.log("B done!");
 };
 promise
-.then(taskA)
-.then(taskB)
-.catch(function(error){
-	console.log(error);
-});
+    .then(taskA)
+    .then(taskB)
+    .catch(function(error) {
+        console.log(error);
+    });
 ```
+
 可以你已经注意到，实例化promise的时候，我们是直接调用`resolve`的，其实这里我们还可以借助 **Promise** 的静态方法`Promise.resolve`来生成promise对（`Promise.reject`同理），因此下面的代码来实现：   
 ```javascript
 var promise = Promise.resolve();
-```   
+```
+
 或者你还存在疑问，假设各个`task`之间需要传值呢？很简单，只要在每个`task`作为返回值即可。即：
 ```javascript
 var promise = Promise.resolve(1);
-var taskA = function(value){
-	console.log(value);//1
-	return value + 1;
+var taskA = function(value) {
+    console.log(value); //1
+    return value + 1;
 };
-var taskB = function(value){
-	console.log(value);//2
+var taskB = function(value) {
+    console.log(value); //2
     return value + 2;
 };
 promise
-.then(taskA)
-.then(taskB)
-.catch(function(error){
-	console.log(error);
-});
+    .then(taskA)
+    .then(taskB)
+    .catch(function(error) {
+        console.log(error);
+    });
 ```
+
 值得注意的是，这里我们都是用`catch`来捕捉异常的。那到底用`.then`的第二个参数函数相比，跟使用`catch`又有什么区别呢？看下面的例子就明白了：
 ```javascript
 function throwError() {
     throw new Error("错误");
 }
+
 function taskA(onReject) {
     return Promise.resolve().then(throwError, onReject);
 }
+
 function taskB(onReject) {
     return Promise.resolve().then(throwError).catch(onReject);
 }
-taskA(function(){
+taskA(function() {
     console.log("taskA Error");
 });
-taskB(function(){
+taskB(function() {
     console.log("taskB Error");
 });
 ```
+
 运行的结果是，`taskA Error`并没有被执行到，而`taskB Error`则会被执行到，那是因为TaskA虽然在`.then`的第二个参数中指定了用来错误处理的函数，但实际上它却不能捕获第一个参数`onResolve`指定的函数（本例为 `throwError`）里面出现的错误。也就是说，`throwError`抛出了异常是在方法链中的下一个方法，即`.catch`所捕获，然后进行相应的错误处理。    
 学习了Promise的链式调后，我们来分析到一下游戏规则，大概是这样的：  
 ![游戏规则](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/8.png)   
@@ -259,11 +277,12 @@ var p3 = new Promise(function(resolve, reject) {
 });
 var promise = Promise.all([p1, p2, p3]);
 promise.then(function onResolved(value) {
-    console.info(value);//[0.5985190889530145, 0.6911524297857181, 0.8921527493860548]
+    console.info(value); //[0.5985190889530145, 0.6911524297857181, 0.8921527493860548]
 }).catch(function onRejected(error) {
-    console.info(error);//p3:0.46978503261829485
+    console.info(error); //p3:0.46978503261829485
 });
-```   
+```
+
 上面代码中，`Promise.all`方法接受一个数组作为参数，`p1、p2、p3`都是Promise对象的实例，如果不是，就会先调用`Promise.resolve`方法，将参数转为Promise实例，再进一步处理，`p1、p2、p3`并不是一个个的顺序执行的，而是同时开始、并行执行的。。   
 promise的状态由`p1、p2、p3`决定，分成两种情况：   
 
@@ -303,11 +322,12 @@ var p3 = new Promise(function(resolve, reject) {
 });
 var promise = Promise.race([p1, p2, p3]);
 promise.then(function onResolved(value) {
-    console.info(value);//p1成功
+    console.info(value); //p1成功
 }).catch(function onRejected(error) {
-    console.info(error);//p1失败
+    console.info(error); //p1失败
 });
-``` 
+```
+
 跟`Promise.all`不一样，`Promise.race`只要有一个promise对象进入 `resolved`或者`rejected`状态的话，就会继续进行后面的处理，换句话说，假设`p1`的状态改变了，`p2`和`p3`还是会继续运行。   
 送上最后一个游戏的源代码：[游戏入口](http://codepen.io/linjinying/pen/GqXrKx)   
 
