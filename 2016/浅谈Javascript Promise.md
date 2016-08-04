@@ -77,7 +77,7 @@ promise
 - .Net的Task  
 - Javascript的Promise A+  
 
-**Javascript Promise模式** 是由最早由CommonJs社区提出并实现，一般是用于异步操作，目的是为了消灭“回调金字塔”，提高编程体验，而Promise存在多个标准，分别有 **Promise A/B/D/A+**，而目前Promise A+已经被ECMAScript 2015纳入标准，因此浏览器都逐渐支持了原生Promise，兼容性如图：  
+**Javascript Promise模式** 是由最早由CommonJs社区提出并实现，一般是用于异步操作，目的是为了消灭“回调金字塔”，提高编程体验，而Promise存在多种规范，分别有 **Promise A/B/D/A+**，而目前Promise A+已经被ECMAScript 2015纳入标准，因此浏览器都逐渐支持了原生Promise，兼容性如图：  
 
 ![兼容性](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/7.png)  
 
@@ -142,7 +142,7 @@ promise.then(function onResolve() {
 ## <div id="p-4"><del> 基本用法 </del>游戏环节</div>
  **pokemon GO** 是最近火爆全球的一款手游，玩家可以对现实世界中出现的精灵进行探索捕捉、战斗以及交换，既然目前中国区还玩不了，今天我们就写一个简（zhi）单（zhang）版的pokemon Go玩玩吧。
 ### 创建Promise
-> **游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵。  
+> **游戏规则**：小智走进一片森林里，他尝试搜寻下附近的精灵。  
 
 从上文我们知道，**Promise** 是一个构造函数，因此我们可以使用 **new** 来实例化对象。
 ```javascript
