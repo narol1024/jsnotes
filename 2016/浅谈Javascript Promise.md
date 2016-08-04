@@ -33,7 +33,7 @@ $.ajax({
 });
 ```
 看完上面的代码，强迫症是不是又犯，没错！这就是我们常说的 **回调金字塔** ，当异步操作越来越多时，可能还需要再向领导申请一台显示器。   
-大家也许听过Javasript Promise可以解决回调金字塔的问题，可能是对兼容性的怀疑，又或者觉得是**ECMAScript 2015**标准里的东西，感觉好难入手的样子。其实Javasript Promise只是一种代码组织模式而已，而且已经有好多类库实现了Promise了，比如jQuery的   `Deferred`,angular的`$q`以及`Q.js`等。
+大家也许听过Javasript Promise可以解决回调金字塔的问题，可能是对兼容性的怀疑，又或者觉得是**ECMAScript 2015**标准里的东西，感觉好难入手的样子。其实Javasript Promise只是一种代码组织模式而已，而且已经有好多类库实现了Promise了，比如jQuery的`Deferred`,angular的`$q`以及`Q.js`等。
 ## <div id="p-2">什么是Promise</div>
 承诺？ 誓言？  
 好吧，作为程序员的我们可能真的无法理解感性的词语。更好的理解是，**Promise**按照音译的话，这是一个希腊神话的英雄的名字 **[普罗米修斯](https://zh.wikipedia.org/wiki/%E6%99%AE%E7%BD%97%E7%B1%B3%E4%BF%AE%E6%96%AF)**，意思是“ **先见之明** ”。那么“先见之明”跟JS编程怎么就扯上了？举个例子：   
