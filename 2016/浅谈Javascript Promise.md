@@ -33,7 +33,7 @@ $.ajax({
 });
 ```
 看完上面的代码，强迫症是不是又犯，没错！这就是我们常说的 **回调金字塔** ，当异步操作越来越多时，可能还需要再向领导申请一台显示器。   
-大家也许听过Javasript Promise可以解决回调金字塔的问题，可能是对兼容性的怀疑，又或者觉得是**ECMAScript 2015**标准里的东西，感觉好难入手的样子。其实Javasript Promise只是一种代码组织模式而已，而且已经有好多类库实现了Promise了，比如`jQuery`,`angular`,`Q.js`等。
+大家也许听过Javasript Promise可以解决回调金字塔的问题，可能是对兼容性的怀疑，又或者觉得是**ECMAScript 2015**标准里的东西，感觉好难入手的样子。其实Javasript Promise只是一种代码组织模式而已，而且已经有好多类库实现了Promise了，比如jQuery的   `Deferred`,angular的`$q`以及`Q.js`等。
 ## <div id="p-2">什么是Promise</div>
 承诺？ 誓言？  
 好吧，作为程序员的我们可能真的无法理解感性的词语。更好的理解是，**Promise**按照音译的话，这是一个希腊神话的英雄的名字 **[普罗米修斯](https://zh.wikipedia.org/wiki/%E6%99%AE%E7%BD%97%E7%B1%B3%E4%BF%AE%E6%96%AF)**，意思是“ **先见之明** ”。那么“先见之明”跟JS编程怎么就扯上了？举个例子：   
@@ -77,7 +77,7 @@ promise
 - .Net的Task  
 - Javascript的Promise A+  
 
-**Javascript Promise模式** 是由最早由CommonJs社区提出并实现，一般是用于异步操作，目的是为了消灭“回调金字塔”，提高编程体验，目前已经被ECMAScript 2015纳入标准，因此浏览器都逐渐支持了原生Promise，兼容性如图：  
+**Javascript Promise模式** 是由最早由CommonJs社区提出并实现，一般是用于异步操作，目的是为了消灭“回调金字塔”，提高编程体验，而Promise存在多个标准，分别有 **Promise A/B/D/A+**，而目前Promise A+已经被ECMAScript 2015纳入标准，因此浏览器都逐渐支持了原生Promise，兼容性如图：  
 
 ![兼容性](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/7.png)  
 
@@ -86,7 +86,7 @@ promise
 - [Q.js](https://github.com/kriskowal/q)  
 - [bluebird](https://github.com/petkaantonov/bluebird)
 
-由于第三方类库支持的Promise标准不一样，所以大家在挑Polyfill类库时，首先要考虑是否支持`Promise A+规范`，比如jQuery的Deferred就不属于Promise A+规范了。
+由于第三方类库支持的Promise标准不一样，所以大家在挑Polyfill类库时，优先考虑是否支持`Promise A+规范`，比如jQuery的Deferred就不属于Promise A+规范了。
 
 ## <div id="p-3">细说Promise</div>
 看到这里，你应该稍微了解什么是Promise以及它能解决什么问题了。   
@@ -142,7 +142,7 @@ promise.then(function onResolve() {
 ## <div id="p-4"><del> 基本用法 </del>游戏环节</div>
  **pokemon GO** 是最近火爆全球的一款手游，玩家可以对现实世界中出现的精灵进行探索捕捉、战斗以及交换，既然目前中国区还玩不了，今天我们就写一个简（zhi）单（zhang）版的pokemon Go玩玩吧。
 ### 创建Promise
-> **游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵，并且有一定的机率捕捉到。  
+> **游戏规则**：小智走进一片森林里，他尝试着搜寻下附近的精灵。  
 
 从上文我们知道，**Promise** 是一个构造函数，因此我们可以使用 **new** 来实例化对象。
 ```javascript
