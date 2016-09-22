@@ -8,6 +8,6 @@
 * [浅谈Javascript Promise](https://github.com/linjinying/jsnotes/blob/master/2016/%E6%B5%85%E8%B0%88Javascript%20Promise.md)   
 * [Javascript的类型转换](https://github.com/linjinying/jsnotes/blob/master/2016/javascript-types.md) 
 
-欢迎投稿或交流。  
+欢迎投稿或技术交流。  
 Gmail：[junejinying@gmail.com](<a href="mailto:junejinying@gmail.com">发送邮件</a>)  
-QQ:576906545
+QQ：576906545
