@@ -302,3 +302,9 @@ function EQUALS(y) {
   }
 }
 ```
+
+* [JavaScript MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures)  
+* [JavaScript 类型与类型转换](http://cookfront.github.io/2015/11/09/javascript-types/)
+* [V8源代码](https://github.com/v8/v8/blob/4.6-lkgr/src/runtime.js)   
+* 《javascript高级程序设计》
+* 《javascript权威指南》
