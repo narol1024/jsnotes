@@ -34,9 +34,8 @@ a == b;//=> false。
 ```
 
 ## 类型转换  
-正因为javascript是弱类型的语言，所以在取值或赋值时会显得比较宽容。但是在运算时，我们需要用到**类型转换**，比如`1`在需要的时候，可以转换成`true`，字符串`1`可以转换成数字类型的`1`等等，这些看似毫无规律，其实这些转换规则都是有套路的。 转换规则如下： 
- 
-图  
+正因为javascript是弱类型的语言，所以在取值或赋值时会显得比较宽容。但是在运算时，我们需要用到**类型转换**，比如`1`在需要的时候，可以转换成`true`，字符串`1`可以转换成数字类型的`1`等等，这些看似毫无规律，其实这些转换规则都是有套路规则的。 转换规则如下： 
+![类型转换规则表](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/9.png)  
 图-1 类型转换规则表（来自javascript权威指南）  
 ### 原始值转换
 从表里可以知道，原始值转换原始值很简单，转换规则都是明确定义的，比如布尔值`true`转换成`Number`类型的话，就是`1`。而原始值转换成对象也非常简单，原始值通过调用`String()`、`Number()`或`Boolean()`函数，即把它们包装成对象即可。但是也有例外，`null`和`undefined`却不能转换成对象类型，否则会抛出异常。  
@@ -70,7 +69,7 @@ o.valueOf();//=>1474248424480
 ```
 ##### 转字符串过程
 对象转换成字符串的过程可以下面的图来表示：
-
+![转字符串过程](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/10.png)  
 在V8源代码里的实现函数是：  
 ```javascript
 // ECMA-262, section 8.6.2.6, page 28.
@@ -94,7 +93,7 @@ function DefaultString(x) {
 ```
 ##### 转数字过程
 对象转换成数字也做了同样的事情，只是它会首先尝试使用 `valueOf` 方法：
-
+![转数字过程](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/11.png)  
 在V8源代码里的实现函数是：  
 ```javascript
 // ECMA-262, section 8.6.2.6, page 28.
