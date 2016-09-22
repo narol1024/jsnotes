@@ -1,7 +1,15 @@
-## 前言  
+## 目录
+
+- [前言](#p-1)
+- [数据类型](#p-2)
+- [类型转换](#p-3) 
+- [参考资料](#p-4)
+
+
+## <div id="p-1">前言</div> 
 最近在跟一个前辈交流时，他说如果学到的东西不能很清晰的表达出来，那么只能你对它还不够深入，这跟阿里前端大神寒冬提到的“搞技术，就该追本溯源”不谋而合。切入今天的主题，javascript作为一门弱类型语言，有时候在使用数据类型时看似很方便，同时也给跟我们带来许多迷惑。比如`13>3`和`"13">"3"`一样吗？`{}+1`会输出啥？本文是阅读《javscript权威指南》后记录的一章读书笔记，希望大家能从中收获一二，如有表述错误，欢迎指正。
 
-## 数据类型 
+## <div id="p-2">数据类型</div> 
 ### 数据类型有哪些  
 javascript的数据类型可以分为两类：原始类型或原始值（String、Number、Boolean、Undefined、Null，以及ECMAScript 6引入的Symbol）和对象类型（Object）。    
 ### 数据类型的比较  
@@ -34,7 +42,7 @@ var b = {x:1};
 a == b;//=> false。
 ```
 
-## 类型转换  
+## <div id="p-3">类型转换</div>  
 正因为javascript是弱类型的语言，所以在取值或赋值时会显得比较宽容。但是在运算时，我们需要用到**类型转换**，比如`1`在需要的时候，可以转换成`true`，字符串`1`可以转换成数字类型的`1`等等，这些看似毫无规律，其实这些转换规则都是有套路规则的。 转换规则如下： 
 ![类型转换规则表](https://raw.githubusercontent.com/linjinying/jsnotes/master/pictrues/2016/9.png)  
 图-1 类型转换规则表（来自javascript权威指南）  
@@ -303,6 +311,7 @@ function EQUALS(y) {
 }
 ```
 
+## <div id="p-4">参考资料</div>
 * [JavaScript MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures)  
 * [JavaScript 类型与类型转换](http://cookfront.github.io/2015/11/09/javascript-types/)
 * [V8源代码](https://github.com/v8/v8/blob/4.6-lkgr/src/runtime.js)   
