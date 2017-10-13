@@ -187,5 +187,5 @@ var EventUtil = {
 };
 ```  
 
-##参考资料  
+## 参考资料  
 - 《javascript高级程序设计》
