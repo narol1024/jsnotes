@@ -1,11 +1,11 @@
-##简介
+## 简介
 理解一个东西，可以先从理解字面上的意思吧。  
 `callee`的意思是被调用者，`caller`的意思是调用者。在[JavaScript MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)上可以看到比较官方的解释。
 * `callee`：指向正在执行的函数。
 * `caller`：指向调用当前函数的函数。  
 
-##使用
-#####1.用法
+## 使用
+##### 1.用法
 那么callee和caller怎么使用的呢？如果有用JS写过递归函数的童鞋都知道，用arguments.callee实现递函数时会更方便的，那这样看来callee和caller应该都是arguments的属性了。那么就不难理解了，下面的例子：
 ```javascript
 var readBook = function(){
@@ -25,9 +25,9 @@ var readBook = function(){
 };
 readBook();
 ```
-#####2.注意
+##### 2.注意
 值得注意的是，在严谨模式下，使用arguments.callee和Function.caller时浏览器都会抛出错误，还有在严谨模式下，假如给caller属性赋值的话，同样也会抛出错误。  
-#####3.经典实例
+##### 3.经典实例
 在实现递归的时候，可以达到解耦的作用，我们可以不必理会函数名是什么。例如下面的阶乘函数：
 ```javascript
 function factorial(number){
@@ -39,7 +39,7 @@ function factorial(number){
 }
 factorial(100);
 ```
-##兼容性
+## 兼容性
 几乎所有浏览器都支持这两个属性，除了早期的opera浏览器。
-##参考资料
+## 参考资料
 – JavaScript MDN [callee](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments/callee) [caller](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments/caller) [caller](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/caller)
