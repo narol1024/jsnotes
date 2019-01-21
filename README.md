@@ -1,5 +1,5 @@
 # jsnotes
-记录javascript各种难点或冷门知识点  
+记录javascript各种难点
 
 * [callee和caller的用法和区别](https://github.com/linjinying/jsnotes/blob/master/2016/callee%26%26caller%E7%94%A8%E6%B3%95%E5%92%8C%E5%8C%BA%E5%88%AB.md)
 * [call和apply的用法和区别](https://github.com/linjinying/jsnotes/blob/master/2016/call%E5%92%8Capply%E7%9A%84%E7%94%A8%E6%B3%95%E5%92%8C%E5%8C%BA%E5%88%AB.md)  
