@@ -1,0 +1,15 @@
+{
+  "name": "webpack-modules-graph-demo",
+  "version": "1.0.0",
+  "description": "webpack-modules-runtime-demo",
+  "scripts": {
+    "serve": "webpack serve",
+    "build": "webpack build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  }
+}
