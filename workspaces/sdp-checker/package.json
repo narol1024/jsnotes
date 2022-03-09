@@ -1,0 +1,13 @@
+{
+  "name": "sdp-checker",
+  "version": "1.0.1",
+  "license": "MIT",
+  "bin": "./bin/cli.js",
+  "dependencies": {
+    "commander": "^9.0.0",
+    "fast-glob": "^3.2.11",
+    "koa": "^2.13.4",
+    "koa-ejs": "^4.3.0",
+    "open": "^8.4.0"
+  }
+}

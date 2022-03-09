@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <title>SDP-Checker</title>
+    <style>
+      .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      }
+      .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+      }
+      .styled-table th,
+      .styled-table td {
+        padding: 12px 15px;
+      }
+      .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+      }
+
+      .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+      }
+
+      .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+      }
+      .styled-table tbody tr.active-row {
+        font-weight: bold;
+        color: #009879;
+      }
+      .styled-table .score {
+        width: 100%;
+        height: 100%;
+        margin: 10px;
+        color: #fff;
+      }
+      .styled-table .stable {
+        background-color: gray;
+      }
+      .styled-table .normal {
+        background-color: #0094ea;
+      }
+      .styled-table .flexible {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="styled-table">
+      <div><%= name %></div>
+      <thead>
+        <tr>
+          <th></th>
+          <% dep.forEach(function(d){ %>
+          <th><%= d %></th>
+          <% }) %>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fan-in</td>
+          <% dep.forEach(function(key){ %>
+          <th><%= inDep[key] || 0 %></th>
+          <% }) %>
+        </tr>
+        <tr>
+          <td>Fan-out</td>
+          <% dep.forEach(function(key){ %>
+          <th><%= outDep[key] || 0 %></th>
+          <% }) %>
+        </tr>
+        <tr>
+          <td>S</td>
+          <% dep.forEach(function(key){ %>
+          <th><%= S[key] %></th>
+          <% }) %>
+        </tr>
+        <tr>
+          <td>Stability</td>
+
+          <% dep.forEach(function(key){ %> <% if (score[key] === 'stable') { %>
+          <th><div class="score stable">stable</div></th>
+          <% } else if (score[key] === 'normal') { %>
+          <th><div class="score normal">normal</div></th>
+          <% } else if (score[key] === 'flexible') { %>
+          <th><div class="score flexible">flexbile</div></th>
+          <% } %> <% }) %>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
