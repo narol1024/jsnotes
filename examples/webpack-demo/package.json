@@ -1,7 +1,7 @@
 {
-  "name": "webpack-modules-graph-demo",
+  "name": "webpack-demo",
   "version": "1.0.0",
-  "description": "webpack-modules-runtime-demo",
+  "description": "",
   "scripts": {
     "serve": "webpack serve",
     "build": "webpack build"
