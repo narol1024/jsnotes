@@ -1,0 +1,17 @@
+{
+  "name": "webpack-hmr-demo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "serve": "webpack serve",
+    "build": "webpack build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
